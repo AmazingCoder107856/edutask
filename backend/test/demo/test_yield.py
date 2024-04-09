@@ -30,4 +30,3 @@ class TestFileHandler:
     def test_getContent(self, sut):
         content = sut.getContent()
         assert content['Name'] == self.json_string['Name']
-

@@ -18,6 +18,7 @@ function TaskView(props) {
    */
   useEffect(() => {
     updateTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
@@ -49,7 +50,7 @@ function TaskView(props) {
       <div className='container'>
         {tasks.map(task =>
           <div className='container-element' key={task.id}>
-            <a onClick={() => { setTrigger(true); setFocus(task) }}>
+            <a href="/#" onClick={() => { setTrigger(true); setFocus(task) }}>
               <img src={`http://i3.ytimg.com/vi/${task.url}/hqdefault.jpg`} alt='' />
               { task.done ? <div className="done-overlay"><div className="done-check"></div></div> : <div></div>}
               <div className="title-overlay">{task.title}</div>

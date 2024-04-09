@@ -43,8 +43,8 @@ function LoginForm({ Login, Signup }) {
             <input type="submit" value={issignup ? "Sign Up" : "Login"} disabled={credentials.email.length === 0}></input>
 
             { issignup ?  
-            <a onClick={(e) => {e.preventDefault(); setIssignup(false)}}>Already have an account? Click here to log into an existing account.</a> :
-            <a onClick={(e) => {e.preventDefault(); setIssignup(true)}}>Have no account yet? Click here to sign up.</a> }
+            <a href="/#" onClick={(e) => {e.preventDefault(); setIssignup(false)}}>Already have an account? Click here to log into an existing account.</a> :
+            <a href="/#" onClick={(e) => {e.preventDefault(); setIssignup(true)}}>Have no account yet? Click here to sign up.</a> }
         </form>
     );
 }

@@ -12,7 +12,8 @@ function TaskDetail({ taskid, updateTasks }) {
 
     useEffect(() => {
         updateTask();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); 
 
     /**
      * Re-fetch the current task from the server once more
