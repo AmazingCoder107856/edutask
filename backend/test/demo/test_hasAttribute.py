@@ -15,6 +15,5 @@ def test_hasAttribute_false(obj):
 
 def test_hasAttribute_None():
     obj = None
-    result = hasAttribute(obj, 'name')
+    result = hasAttribute(obj, 'name') # type: ignore
     assert result == False
-

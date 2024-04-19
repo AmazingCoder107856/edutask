@@ -33,7 +33,7 @@ class TestNamespaces:
         user = {'firstName': 'Jane', 'lastName': 'Doe', 'email': 'jane.doe'}
         # TODO: mock the DAO such that it returns this simulated user
         mockedDAO = None
-        uc = UserController(dao=mockedDAO)
+        uc = UserController(dao=mockedDAO) # type: ignore
 
         # TODO: patch the fullmatch method of the regex library
         with patch('?') as mockfullmatch:

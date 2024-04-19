@@ -76,7 +76,7 @@ if __name__ == '__main__':
         host = os.environ.get('FLASK_BIND_IP')
 
     port = os.environ.get('PORT')
-    app.run(host, port)
+    app.run(host, port) # type: ignore
 
 # if __name__ == '__main__':
 #     print(app.url_map)
