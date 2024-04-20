@@ -28,7 +28,7 @@ yarn-error.log*
 .mypy_cache/
 
 # database
-data/db/
+# data/db/
 *.coverage
 backend/.venv/
 backend/test/solutions/
