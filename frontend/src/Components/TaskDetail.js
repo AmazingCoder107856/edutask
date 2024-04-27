@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './../Styles/TaskDetail.css'
 
-import Editable from './Editable';
+import Editable from './Editable.js';
 
-import Converter from './../Util/Converter'
+import Converter from './../Util/Converter.js'
 
 function TaskDetail({ taskid, updateTasks }) {
     const [task, setTask] = useState(null);

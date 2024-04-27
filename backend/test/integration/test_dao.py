@@ -1,14 +1,13 @@
 import pytest
 import unittest.mock as mock
 from pymongo.errors import WriteError
-from unittest.mock import patch
-import json 
+from unittest.mock import patch 
 
 from src.util.dao import DAO
 import json
 
 testValidator =     {
-"$jsonSchema": {
+    "$jsonSchema": {
         "bsonType": "object",
         "required": ["title", "description", "bool_value"],
         "properties": {

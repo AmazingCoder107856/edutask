@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './../Styles/TaskView.css'
 import './../Styles/Form.css'
-import Popup from './../Components/Popup'
-import TaskDetail from './TaskDetail'
-import TaskCreator from './TaskCreator'
+import Popup from './../Components/Popup.js'
+import TaskDetail from './TaskDetail.js'
+import TaskCreator from './TaskCreator.js'
 
-import Converter from './../Util/Converter'
+import Converter from './../Util/Converter.js'
 
 function TaskView(props) {
 
