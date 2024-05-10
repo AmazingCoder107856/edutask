@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import './Styles/App.css'
-import TaskView from './Components/TaskView'
-import NavBar from './Components/NavBar'
-import LoginForm from './Components/LoginForm'
+import TaskView from './Components/TaskView.js'
+import NavBar from './Components/NavBar.js'
+import LoginForm from './Components/LoginForm.js'
 
 function App() {
   const [user, setUser] = useState({})
