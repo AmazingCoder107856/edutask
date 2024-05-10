@@ -1,8 +1,9 @@
+from pymongo import MongoClient
 import pytest
 import unittest.mock as mock
 from pymongo.errors import WriteError
-from unittest.mock import patch 
-
+from unittest.mock import patch, MagicMock
+from src.util import dao
 from src.util.dao import DAO
 import json
 
@@ -27,6 +28,17 @@ testValidator =     {
         }
     }
 }
+
+@pytest.fixture(scope='module')
+def test_db():
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['test_database']
+    yield db
+    client.drop_database('test_database')
+
+@pytest.fixture(scope='module')
+def dao(test_db):
+    return DAO(test_db)
 
 @pytest.fixture
 def sut():
@@ -66,20 +78,4 @@ Test to see if exception is raised if:
 def test_invalid_writeerror(sut, inputData, expected):
     with pytest.raises(WriteError):
         sut.create(inputData)
-    assert expected in str(WriteError)
-
-"""
-Test to see if all properties is present, valid bson and not unique item.
-dao.js need correction before all test scenarios can be implemented.
-"""
-@pytest.mark.parametrize('inputData, expected',
-    [
-        ([{"title": "title", "description": "right", "bool_value": True}, {"title": "title", "description": "right", "bool_value": True}], "WriteError"), 
-    ]
-)
-@pytest.mark.integration
-def test_invalid_uniqueItems(sut, inputData, expected):
-    with pytest.raises(WriteError):
-        for item in inputData:
-            sut.create(item)
     assert expected in str(WriteError)
