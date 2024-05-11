@@ -34,7 +34,7 @@ class TestNamespaces:
         # TODO: mock the DAO such that it returns this simulated user
         mockedDAO = MagicMock()
         mockedDAO.find.return_value = [user] 
-        uc = UserController(dao=mockedDAO) # type: ignore
+        uc = UserController(dao=mockedDAO)
 
         # TODO: patch the fullmatch method of the regex library
         with patch('src.controllers.usercontroller.re.fullmatch') as mockfullmatch:

@@ -1,11 +1,14 @@
 from pymongo import MongoClient
+from pymongo.errors import PyMongoError
 import pytest
 import unittest.mock as mock
 from pymongo.errors import WriteError
 from unittest.mock import patch, MagicMock
 from src.util import dao
+from src.util import validators
 from src.util.dao import DAO
 import json
+import os
 
 testValidator =     {
     "$jsonSchema": {
@@ -48,6 +51,15 @@ def sut():
 
         yield task
         task.collection.drop()
+
+# @pytest.fixture(scope='module')
+# def test_data(dao):
+#     # Insert some test data into the database
+#     test_data = {"_id": "test_id", "title": "old_title", "description": "old_description", "bool_value": False}
+#     dao.create('collection', test_data)
+#     yield test_data
+#     # Clean up the test data after the test
+#     dao.delete('collection', {"_id": "test_id"})
 
 
 '''1 . Test to see if object is returned if all required properties is present, valid bson data, unique items (only 1 item with same name in document)'''
