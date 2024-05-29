@@ -132,22 +132,20 @@ describe('Test to se if we can manipulating a todolist', () => {
     it('toggles a to-do item to done', () => {
       cy.get('form').eq(1).find('input[type=text]').type('New Task{enter}')
       cy.get('.todo-list').get('.todo-item').last().find('span').eq(0).trigger('click')
-          .then(() => {
-            cy.get('.todo-list').get('.todo-item').last().find('span').eq(0).should('have.class', 'checked')
-            cy.get('.todo-list').get('.todo-item').last().find('.checker.checked + .editable').should('have.css', 'text-decoration', 'line-through solid rgb(49, 46, 46)')
-          })
+        .then(() => {
+          cy.get('.todo-list').get('.todo-item').last().find('span').eq(0).should('have.class', 'checked')
+          cy.get('.todo-list').get('.todo-item').last().find('.checker.checked + .editable').should('have.css', 'text-decoration', 'line-through solid rgb(49, 46, 46)')
+        })
     })
 
     it('toggles a to-do item to active', () => {
       cy.get('form').eq(1).find('input[type=text]').type('New Task{enter}')
       cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).trigger('click')
-  
-        cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).trigger('click')
-          .then(() => {
-            cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).should('have.class', 'unchecked')
-            cy.get('.todo-list').get('.todo-item').first().find('.checker.unchecked + .editable').should('have.css', 'text-decoration', 'none solid rgb(49, 46, 46)')
-          })
-      })
+        .then(() => {
+          cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).should('have.class', 'unchecked')
+          cy.get('.todo-list').get('.todo-item').first().find('.checker.unchecked + .editable').should('have.css', 'text-decoration', 'none solid rgb(49, 46, 46)')
+        })
+    })
   })
 
   // R8UC3: Delete a To-Do Item
@@ -155,9 +153,9 @@ describe('Test to se if we can manipulating a todolist', () => {
     it('deletes a to-do item', () => {
       cy.get('form').eq(1).find('input[type=text]').type('New Task{enter}')
       cy.get('.todo-list').get('.todo-item').last().find('span').eq(2).trigger('click')
-          .then(() => {
-            cy.get('.todo-list').get('.todo-item').last().find('span').eq(1).should('not.have.text', 'test item');
-          })
+        .then(() => {
+          cy.get('.todo-list').get('.todo-item').last().find('span').eq(1).should('not.have.text', 'test item');
+        })
     })
   })
 
