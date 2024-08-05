@@ -116,67 +116,51 @@ describe('Test to se if we can manipulating a todolist', () => {
     //  Now lets start the tests.
   
     // ### R8UC1 ###
-    describe("R8UC1", () => {
-      // test to check that the description of todo item input field is empty at start
-      it('Should have an empty input field', () => {
-        cy.get('form').eq(1).find('input[type=text]').should('have.value', '')
-      })
-  
-      // The submit button should be disabled if empty field
-      it('Should have a disable button when empty field', () => {
-        cy.get('form').eq(1).find('input[type=submit]').should('be.disabled')
-      })
-  
-      // test to see that the submit button is enabled when text input field is not empty
-      it('Should have an enable button when field not empty', () => {
-        cy.get('form').eq(1).find('input[type=text]').type('fake todo', { force: true })
-        cy.get('form').eq(1).find('input[type=submit]').should('be.enabled')
-      })
-  
-      // test to see if same added input is showing last in the todo item list.
-      it('Should have same name as input last in the todo item list', () => {
-        cy.get('form').eq(1).find('input[type=text]').type('hello', { force: true })
-        cy.get('form').eq(1).find('input[type=submit]').click({ force: true })
-        cy.get('.todo-list').get('.todo-item').last().find('span').eq(1).should('have.text', 'hello')
-      })
-    })
+    describe('Create To-Do Item', () => {
+      it('should navigate to the task creation page', () => {
+        cy.visit('/tasks');
+        cy.get('[data-cy=create-task]').click();
+        cy.url().should('include', '/tasks/new');
+      });
+    
+      it('should create a new to-do item', () => {
+        cy.visit('/tasks/new');
+        cy.get('[data-cy=todo-input]').type('New To-Do Item');
+        cy.get('[data-cy=save-todo]').click();
+        cy.get('[data-cy=todo-list]').should('contain', 'New To-Do Item');
+      });
+    
+      it('should display an error for empty to-do item', () => {
+        cy.visit('/tasks/new');
+        cy.get('[data-cy=save-todo]').click();
+        cy.get('[data-cy=error-message]').should('contain', 'Description cannot be empty');
+      });
+    });    
   
     //  ### R8UC2 ###
-    describe("R8UC2", () => {
-      // test to see if the item is struck through when the first span of the todo list item is clicked
-      it('Should have a text decoration of line-trough if toggled', () => {
-        cy.get('.todo-list').get('.todo-item').last().find('span').eq(0).trigger('click')
-          .then(() => {
-            cy.get('.todo-list').get('.todo-item').last().find('span').eq(0).should('have.class', 'checked')
-            cy.get('.todo-list').get('.todo-item').last().find('.checker.checked + .editable').should('have.css', 'text-decoration', 'line-through solid rgb(49, 46, 46)')
-          })
-      })
-  
-      // test to see if the item which was  struck through is  not stuck trough anymore when clicked again
-      it('Should not have text decoration of none if toggled twice', () => {
-        cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).trigger('click')
-  
-        cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).trigger('click')
-          .then(() => {
-            cy.get('.todo-list').get('.todo-item').first().find('span').eq(0).should('have.class', 'unchecked')
-            cy.get('.todo-list').get('.todo-item').first().find('.checker.unchecked + .editable').should('have.css', 'text-decoration', 'none solid rgb(49, 46, 46)')
-          })
-      })
-    })
+    describe('Toggle To-Do Item', () => {
+      it('should mark a to-do item as completed', () => {
+        cy.visit('/tasks');
+        cy.get('[data-cy=todo-item]').first().find('[data-cy=toggle-complete]').click();
+        cy.get('[data-cy=todo-item]').first().should('have.class', 'completed');
+      });
+    
+      it('should unmark a completed to-do item', () => {
+        cy.visit('/tasks');
+        cy.get('[data-cy=todo-item]').first().find('[data-cy=toggle-complete]').click();
+        cy.get('[data-cy=todo-item]').first().should('not.have.class', 'completed');
+      });
+    });    
   
     // R8UC 3
-    describe("R8UC3", () => {
-      it("The user clicks on the x symbol behind the description of the todo item, the todo item is deleted.", () => {
-        cy.get('.todo-list').get('.inline-form').find('input[type=text]').type('test item', { force: true });
-        cy.contains('Add').click({ force: true });
-        cy.wait(800);
-  
-        cy.get('.todo-list').get('.todo-item').last().find('span').eq(2).trigger('click')
-          .then(() => {
-            cy.get('.todo-list').get('.todo-item').last().find('span').eq(1).should('not.have.text', 'test item');
-          })
-      })
-    })
+    describe('Delete To-Do Item', () => {
+      it('should delete a to-do item', () => {
+        cy.visit('/tasks');
+        cy.get('[data-cy=todo-item]').first().find('[data-cy=delete-todo]').click();
+        cy.get('[data-cy=confirm-delete]').click();
+        cy.get('[data-cy=todo-list]').should('not.contain', 'New To-Do Item');
+      });
+    });    
   
     after(function () {
       // clean up by deleting the user from the database
