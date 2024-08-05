@@ -52,14 +52,14 @@ def sut():
         yield task
         task.collection.drop()
 
-# @pytest.fixture(scope='module')
-# def test_data(dao):
-#     # Insert some test data into the database
-#     test_data = {"_id": "test_id", "title": "old_title", "description": "old_description", "bool_value": False}
-#     dao.create('collection', test_data)
-#     yield test_data
-#     # Clean up the test data after the test
-#     dao.delete('collection', {"_id": "test_id"})
+@pytest.fixture(scope='module')
+def test_data(dao):
+    # Insert some test data into the database
+    test_data = {"_id": "test_id", "title": "old_title", "description": "old_description", "bool_value": False}
+    dao.create('collection', test_data)
+    yield test_data
+    # Clean up the test data after the test
+    dao.delete('collection', {"_id": "test_id"})
 
 
 '''1 . Test to see if object is returned if all required properties is present, valid bson data, unique items (only 1 item with same name in document)'''
@@ -79,6 +79,7 @@ Test to see if exception is raised if:
 [1] all required properties is NOT PRESENT, valid bson data, unique items
 [2] all required properties is NOT PRESENT, invalid bson data, unique items
 """
+@pytest.mark.integration
 @pytest.mark.parametrize('inputData, expected',
     [
         ({"title": "title", "description": 1, "bool_value": True}, "WriteError"),
@@ -86,7 +87,6 @@ Test to see if exception is raised if:
         ({"title": "title", "bool_value": "hej"}, "WriteError"),           
     ]
 )
-@pytest.mark.integration
 def test_invalid_writeerror(sut, inputData, expected):
     with pytest.raises(WriteError):
         sut.create(inputData)
